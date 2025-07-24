@@ -1,0 +1,16 @@
+App
+└─ Quiz  
+   ├─ quizData  
+   ├─ isFinished  
+   ├─ Question  
+   │    ├─ activeQuestionIndex  
+   │    └─ selectedAnswer  
+   ├─ ProgressBar  
+   │    ├─ timeLeft  
+   │    └─ activeQuestionIndex  
+   ├─ ConfirmModal  
+   │    ├─ showModal  
+   │    ├─ onConfirm  
+   │    └─ onCancel  
+   └─ Results (userAnswers)  ← Chỉ hiển thị khi isFinished = true
+

@@ -21,22 +21,22 @@ export const QUESTIONS = [
     answers: ['Java', 'Python', 'JavaScript', 'C#'],
     correct: 'JavaScript',
   },
-  {
-    id: 'q3',
-    questionText: 'Who created React?',
-    answers: ['Google', 'Facebook', 'Microsoft', 'Apple'],
-    correct: 'Facebook',
-  },
-  {
-    id: 'q4',
-    questionText: 'What does JSX stand for?',
-    answers: ['JavaScript XML', 'Java Syntax Extension', 'JS Export', 'None'],
-    correct: 'JavaScript XML',
-  },
-  {
-    id: 'q5',
-    questionText: 'Which hook is used to manage state in functional components?',
-    answers: ['useEffect', 'useCallback', 'useRef', 'useState'],
-    correct: 'useState',
-  }
+  // {
+  //   id: 'q3',
+  //   questionText: 'Who created React?',
+  //   answers: ['Google', 'Facebook', 'Microsoft', 'Apple'],
+  //   correct: 'Facebook',
+  // },
+  // {
+  //   id: 'q4',
+  //   questionText: 'What does JSX stand for?',
+  //   answers: ['JavaScript XML', 'Java Syntax Extension', 'JS Export', 'None'],
+  //   correct: 'JavaScript XML',
+  // },
+  // {
+  //   id: 'q5',
+  //   questionText: 'Which hook is used to manage state in functional components?',
+  //   answers: ['useEffect', 'useCallback', 'useRef', 'useState'],
+  //   correct: 'useState',
+  // }
 ];

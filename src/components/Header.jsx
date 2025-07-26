@@ -6,8 +6,8 @@ export default function Header() {
     <>
       <img src={assets.quizLogo} alt="Quiz Logo" className="w-24 h-24 mx-auto" />
       <h1 className="text-3xl font-bold text-center text-purple-600 mt-2">
-        React Quiz
-      </h1>
+        React Quiz    
+      </h1>     
     </>
   );
 }

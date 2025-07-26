@@ -1,42 +1,80 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Question from "./Question";
+import Answer from "./Answer"
+import SkipButton from './SkipButton';
 
 export default function Quiz({ questions }) {
 
-    
-  const questionText = 'What is the capital of France?';
-  const answers = ['Paris', 'Berlin', 'Rome', 'Madrid'];
+  // index hiện tại
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
+
+  // câu hỏi hiện tại
+  const question = questions[currentIndex];
+  const {id, questionText, answers, correct } = question;
+  
+  // mảng lưu câu trả lời theo từng câu hỏi
+  // { id: 'q1', answer: 'Paris' },
+
+  const [userAnswers, setUserAnswers] = useState([]);
+
+  // lưu đáp án tạm của câu hỏi tại index
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
+
+   useEffect(() => {
+    console.log(userAnswers);
+  }, [userAnswers]);
+
+
+  const handleNextQuestion = () => {
+
+    if (!selectedAnswer) {
+      alert("You must slect a answer.");
+      return;
+    }
+    
+    // next khi mà chưa phải câu cuối
+    if (currentIndex < questions.length - 1){ 
+
+      // lưu lại câu trả lời
+      setUserAnswers(prev => [...prev, selectedAnswer]);
+
+      // reset lại đáp án để sang câu mới không bị giữ
+      setSelectedAnswer(null);
+      console.log("next question");
+      setCurrentIndex(prev => prev + 1)
+    }else{
+        console.log("finish question");
+        setIsFinished(true);
+    }
+
+  }
+
+  const handleSelectAnswer = (id, answer) => {
+    setSelectedAnswer({id: id, answer:answer});
+  }
+
+  // Hàm khi click vào answer
+  if (!questions || questions.length === 0) return null;
+
   return (
+    
     <div className="max-w-2xl w-full mx-auto px-6 py-10 bg-gradient-to-br from-purple-700 to-indigo-800 rounded-3xl shadow-2xl text-white text-center space-y-8 mt-10">
-      <h2 className="text-2xl sm:text-3xl font-bold">
-        {questionText}
-      </h2>
-
-      <ul className="flex flex-col gap-4">
-        {answers.map((ans) => {
-          const isSelected = ans === selectedAnswer;
-          return (
-            <li key={ans}>
-              <button
-                onClick={() => setSelectedAnswer(ans)}
-                className={`w-full py-4 px-6 rounded-full font-semibold transition-all duration-300
-                  ${isSelected
-                    ? 'bg-yellow-400 text-black scale-105'
-                    : 'bg-white/10 hover:bg-white/20 text-white hover:scale-105'}
-                `}
-              >
-                {ans}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-
+          <>
+            <Question questionText={questionText} />
+            {answers.map((answer) => (
+              <Answer
+                key={answer}
+                answer={answer}
+                isSelected={selectedAnswer?.answer === answer}
+                onSelectedAnswer={() => handleSelectAnswer(id, answer)}
+              />
+            ))}
+            
+          </>
       <div className="pt-6">
-        <button className="text-sm text-gray-300 hover:text-white underline transition">
-          Skip Question
-        </button>
+         <SkipButton text={"Skip question"} onNext={handleNextQuestion} />
       </div>
     </div>
   );

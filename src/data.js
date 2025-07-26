@@ -40,3 +40,19 @@ export const QUESTIONS = [
   //   correct: 'useState',
   // }
 ];
+
+/**
+ * @typedef {Object} QuizState
+ * @property {number} currentQuestionIndex - Index của câu hỏi hiện tại
+ * @property {string|null} currentSelectedAnswer - Câu trả lời được chọn tạm thời
+ * @property {string[]} submittedAnswers - Các câu trả lời đã nộp
+ * @property {boolean} isQuizFinished - Đã hoàn thành bài quiz hay chưa
+ */
+
+/** @type {QuizState} */
+export const initialState = {
+  currentQuestionIndex: 0,
+  currentSelectedAnswer: null,
+  submittedAnswers: [],
+  isQuizFinished: false,
+};

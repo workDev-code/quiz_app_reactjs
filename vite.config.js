@@ -8,4 +8,9 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+
+  test: {
+    globals: true,
+    environment: 'jsdom', // để test React component nếu cần
+  },
 })

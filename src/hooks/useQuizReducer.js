@@ -2,25 +2,30 @@ import {SELECT_ANSWER, NEXT_QUESTION, RESET_QUIZ} from "../constants/quizActionT
 import {initialState} from "../data"
 
 
+// Reducer
 export function quizReducer(state, action) {
     switch(action.type){
-        case SELECT_ANSWER:
+        case SELECT_ANSWER: {
             return {
                 ...state,
-                // cập nhật state ở đây
+                currentSelectedAnswer: action.payload
             };
-        case NEXT_QUESTION:
+        }
+        case NEXT_QUESTION: {
+            const isLastQuestion = state.currentQuestionIndex === QUESTIONS.length - 1;
             return {
                 ...state,
-                // cập nhật state ở đây
-            };    
+                currentQuestionIndex: isLastQuestion ? state.currentQuestionIndex : state.currentQuestionIndex + 1,
+                currentSelectedAnswer: null,
+                submittedAnswers: [...state.submittedAnswers, state.currentSelectedAnswer],
+                isQuizFinished: isLastQuestion
+            };
+        }
 
         case RESET_QUIZ:
-            return {
-                ...state,
-                // cập nhật state ở đây
-            };
-        default:
-            return state; // nếu không có action nào khớp thì return lại state cũ
+            return initialState;
+
+        default: 
+            return state;
     }
 }

@@ -2,7 +2,6 @@
 import quizComplete from './assets/quiz-complete.png';
 import quizLogo from './assets/quiz-logo.png';
 
-
 export const assets = {
     quizComplete,
     quizLogo

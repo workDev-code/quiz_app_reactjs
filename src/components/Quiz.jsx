@@ -1,59 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useReducer } from 'react';
 import Question from "./Question";
 import Answer from "./Answer"
 import SkipButton from './SkipButton';
+import { quizReducer } from '../hooks/useQuizReducer';
+import { initialState } from '../data';
+import { SELECT_ANSWER, NEXT_QUESTION, RESET_QUIZ } from '../constants/quizActionTypes';
 
 export default function Quiz({ questions }) {
 
-  // index hiện tại
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFinished, setIsFinished] = useState(false);
+  const [quizState, quizDispatch] = useReducer(quizReducer, initialState);
 
   // câu hỏi hiện tại
-  const question = questions[currentIndex];
-  const {id, questionText, answers, correct } = question;
+  const question = questions[quizState.currentQuestionIndex];
+  const {id, questionText, answers } = question;
   
-  // mảng lưu câu trả lời theo từng câu hỏi
-  // { id: 'q1', answer: 'Paris' },
-
-  const [userAnswers, setUserAnswers] = useState([]);
-
-  // lưu đáp án tạm của câu hỏi tại index
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-
-
-   useEffect(() => {
-    console.log(userAnswers);
-  }, [userAnswers]);
-
-
-  const handleNextQuestion = () => {
-
-    if (!selectedAnswer) {
-      alert("You must slect a answer.");
-      return;
-    }
-    
-    // next khi mà chưa phải câu cuối
-    if (currentIndex < questions.length - 1){ 
-
-      // lưu lại câu trả lời
-      setUserAnswers(prev => [...prev, selectedAnswer]);
-
-      // reset lại đáp án để sang câu mới không bị giữ
-      setSelectedAnswer(null);
-      console.log("next question");
-      setCurrentIndex(prev => prev + 1)
-    }else{
-        console.log("finish question");
-        setIsFinished(true);
-    }
-
-  }
 
   const handleSelectAnswer = (id, answer) => {
-    setSelectedAnswer({id: id, answer:answer});
+    quizDispatch(
+      { type: SELECT_ANSWER,
+        payload: {
+            id: id,
+            answer
+          }
+      });
   }
+ 
+  const handleNextQuestion = () => {
+
+    if (!quizState.currentSelectedAnswer) {
+        alert("Please select an answer first.");
+      return;
+    }
+    quizDispatch({ type: NEXT_QUESTION});
+  }
+
+  const handleReset = () => {
+    quizDispatch({ type: RESET_QUIZ });
+  };
+
 
   // Hàm khi click vào answer
   if (!questions || questions.length === 0) return null;
@@ -67,7 +51,8 @@ export default function Quiz({ questions }) {
               <Answer
                 key={answer}
                 answer={answer}
-                isSelected={selectedAnswer?.answer === answer}
+                // !BUG
+                isSelected={quizState?.currentSelectedAnswer?.answer === answer}
                 onSelectedAnswer={() => handleSelectAnswer(id, answer)}
               />
             ))}

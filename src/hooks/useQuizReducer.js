@@ -25,7 +25,6 @@ export function quizReducer(state, action) {
         }
         case RESET_QUIZ:
             return initialState;
-            
         default: 
             return state;
     }

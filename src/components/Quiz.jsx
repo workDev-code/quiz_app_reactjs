@@ -5,6 +5,9 @@ import SkipButton from './SkipButton';
 import { quizReducer } from '../hooks/useQuizReducer';
 import { initialState } from '../data';
 import { SELECT_ANSWER, NEXT_QUESTION, RESET_QUIZ } from '../constants/quizActionTypes';
+import  ResultScreen  from "../components/ResultScreen";
+import {QUESTIONS} from "../data"
+
 
 export default function Quiz({ questions }) {
 
@@ -14,7 +17,6 @@ export default function Quiz({ questions }) {
   const question = questions[quizState.currentQuestionIndex];
   const {id, questionText, answers } = question;
   
-
   const handleSelectAnswer = (id, answer) => {
     quizDispatch(
       { type: SELECT_ANSWER,
@@ -26,18 +28,16 @@ export default function Quiz({ questions }) {
   }
  
   const handleNextQuestion = () => {
-
     if (!quizState.currentSelectedAnswer) {
         alert("Please select an answer first.");
       return;
     }
     quizDispatch({ type: NEXT_QUESTION});
   }
-
+  
   const handleReset = () => {
     quizDispatch({ type: RESET_QUIZ });
   };
-
 
   // Hàm khi click vào answer
   if (!questions || questions.length === 0) return null;
@@ -45,22 +45,29 @@ export default function Quiz({ questions }) {
   return (
     
     <div className="max-w-2xl w-full mx-auto px-6 py-10 bg-gradient-to-br from-purple-700 to-indigo-800 rounded-3xl shadow-2xl text-white text-center space-y-8 mt-10">
-          <>
+        
             <Question questionText={questionText} />
             {answers.map((answer) => (
               <Answer
                 key={answer}
                 answer={answer}
-                // !BUG
                 isSelected={quizState?.currentSelectedAnswer?.answer === answer}
                 onSelectedAnswer={() => handleSelectAnswer(id, answer)}
               />
             ))}
-            
-          </>
-      <div className="pt-6">
+           
          <SkipButton text={"Skip question"} onNext={handleNextQuestion} />
-      </div>
+         
+         {
+            // nếu kết thúc câu hỏi thì mở ra ResultScreen
+            quizState.isQuizFinished 
+              &&
+              <ResultScreen
+                userAnswers={quizState.submittedAnswers}
+                questions={QUESTIONS}
+                onRestart={() => handleReset()}
+              />
+         }
     </div>
   );
 }

@@ -1,45 +1,73 @@
-export default function ResultScreen({questions, userAnswers, onRestart}){
+import { QUESTIONS } from "../data";
 
-    const total = questions.length;
+export default function ResultScreen({ questions, userAnswers, onRestart }) {
+  const total = questions.length;
 
-    const correct = userAnswers.filter((ans) => {
-        const question = questions.find((q) => q.id === ans.id);
-        return question && question.correct === ans.answer;
-    }).length;
+  const correct = userAnswers.filter((ans) => {
+    const question = questions.find((q) => q.id === ans.id);
+    return question && question.correct === ans.answer;
+  }).length;
 
-    const incorrect = total - correct;
-     
-    return (
-        <div className="text-white text-center space-y-4">
+  const incorrect = total - correct;
+  const skipped = userAnswers.filter((ans) => !ans.answer).length;
 
-            <h2 className="text-3xl font-bold">QUIZ COMPLETED!</h2>
+  return (
+    <div className="text-white px-6 py-8 max-w-3xl mx-auto space-y-6">
+      <h2 className="text-4xl font-bold text-center text-purple-300">🎉 Quiz Completed!</h2>
 
-            <div className="flex justify-center space-x-6">
-                <p>{0}% Skipped</p>
-                <p>{Math.round((correct / total) * 100)}% Answered Correctly</p>
-                <p>{Math.round((incorrect / total) * 100)}% Answered Incorrectly</p>
-            </div>
-
-            <hr className="my-4 border-gray-400" />
-
-            { questions.map((q, index) => {
-                const userAnswer = userAnswers[index]?.answer;
-                const isCorrect = userAnswer === q.correct;
-
-                    return (
-                        <div key={index}>
-                            <p className="text-sm mb-1">Question {index + 1}</p>
-                            <p>{q.questionText}</p>
-                            <p className={isCorrect ? "text-green-300" : "text-red-400"}>
-                            {userAnswer || 'No answer selected'}
-                            </p>
-                        </div>
-                    );
-                })
-            }
-            <button className="mt-4 bg-white text-purple-800 px-4 py-2 rounded" onClick={onRestart}>
-                Restart Quiz
-            </button>
+      {/* Tổng kết kết quả */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-lg text-center">
+        <div className="bg-purple-900 rounded-lg p-4 shadow">
+          <p className="font-bold text-yellow-400">{Math.round((skipped / total) * 100)}%</p>
+          <p>Skipped</p>
         </div>
+        <div className="bg-purple-900 rounded-lg p-4 shadow">
+          <p className="font-bold text-green-400">{Math.round((correct / total) * 100)}%</p>
+          <p>Correct</p>
+        </div>
+        <div className="bg-purple-900 rounded-lg p-4 shadow">
+          <p className="font-bold text-red-400">{Math.round((incorrect / total) * 100)}%</p>
+          <p>Incorrect</p>
+        </div>
+      </div>
+
+      <hr className="border-gray-600 my-6" />
+
+      {/* Chi tiết từng câu hỏi */}
+      <div className="space-y-6">
+        {questions.map((q, index) => {
+          const userAnswer = userAnswers.find((ua) => ua.id === q.id)?.answer;
+          const isCorrect = userAnswer === q.correct;
+
+          return (
+            <div key={index} className="bg-purple-800 p-4 rounded-lg shadow">
+              <p className="text-sm text-gray-300 mb-1">Question {index + 1}</p>
+              <p className="font-semibold">{q.questionText}</p>
+              <p className="text-green-300 mt-1">Correct: {q.correct}</p>
+              <p
+                className={`mt-1 font-medium ${
+                  userAnswer
+                    ? isCorrect
+                      ? "text-green-400"
+                      : "text-red-400"
+                    : "text-yellow-400"
+                }`}
+              >
+                Your answer: {userAnswer || "No answer selected"}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="text-center mt-8">
+        <button
+          className="bg-white text-purple-700 hover:bg-gray-100 font-semibold px-6 py-2 rounded shadow"
+          onClick={onRestart}
+        >
+          🔁 Restart Quiz
+        </button>
+      </div>
+    </div>
   );
 }

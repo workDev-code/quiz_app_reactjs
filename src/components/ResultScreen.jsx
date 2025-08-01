@@ -1,4 +1,5 @@
 import { QUESTIONS } from "../data";
+import RestartButton from "./RestartButton";
 
 export default function ResultScreen({ questions, userAnswers, onRestart }) {
   const total = questions.length;
@@ -60,14 +61,8 @@ export default function ResultScreen({ questions, userAnswers, onRestart }) {
         })}
       </div>
 
-      <div className="text-center mt-8">
-        <button
-          className="bg-white text-purple-700 hover:bg-gray-100 font-semibold px-6 py-2 rounded shadow"
-          onClick={onRestart}
-        >
-          🔁 Restart Quiz
-        </button>
-      </div>
+      <RestartButton onRestart={onRestart}/>
+      
     </div>
   );
 }

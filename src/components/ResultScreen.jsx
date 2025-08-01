@@ -1,5 +1,6 @@
 import { QUESTIONS } from "../data";
 import RestartButton from "./RestartButton";
+import ResultQuestionCard from "./ResultQuestionCard";
 
 export default function ResultScreen({ questions, userAnswers, onRestart }) {
   const total = questions.length;
@@ -33,36 +34,12 @@ export default function ResultScreen({ questions, userAnswers, onRestart }) {
       </div>
 
       <hr className="border-gray-600 my-6" />
-
+      
       {/* Chi tiết từng câu hỏi */}
-      <div className="space-y-6">
-        {questions.map((q, index) => {
-          const userAnswer = userAnswers.find((ua) => ua.id === q.id)?.answer;
-          const isCorrect = userAnswer === q.correct;
-
-          return (
-            <div key={index} className="bg-purple-800 p-4 rounded-lg shadow">
-              <p className="text-sm text-gray-300 mb-1">Question {index + 1}</p>
-              <p className="font-semibold">{q.questionText}</p>
-              <p className="text-green-300 mt-1">Correct: {q.correct}</p>
-              <p
-                className={`mt-1 font-medium ${
-                  userAnswer
-                    ? isCorrect
-                      ? "text-green-400"
-                      : "text-red-400"
-                    : "text-yellow-400"
-                }`}
-              >
-                Your answer: {userAnswer || "No answer selected"}
-              </p>
-            </div>
-          );
-        })}
-      </div>
+      <ResultQuestionCard questions={questions} userAnswers={userAnswers} />
 
       <RestartButton onRestart={onRestart}/>
-      
+
     </div>
   );
 }

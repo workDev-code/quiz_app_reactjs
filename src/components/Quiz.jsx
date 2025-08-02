@@ -17,10 +17,13 @@ export default function Quiz({ questions }) {
   
   const [quizState, quizDispatch] = useReducer(quizReducer, initialState);
 
+   // Nếu chưa có câu hỏi nào
+  if (!questions || questions.length === 0) return null;
+
   // câu hỏi hiện tại
   const question = questions[quizState.currentQuestionIndex];
-  const { id, questionText, answers } = question;
 
+   // --- Handler ---
   const handleSelectAnswer = (id, answer) => {
     quizDispatch({
       type: SELECT_ANSWER,
@@ -43,32 +46,29 @@ export default function Quiz({ questions }) {
     quizDispatch({ type: RESET_QUIZ });
   };
 
-  // Hàm khi click vào answer
-  if (!questions || questions.length === 0) return null;
+    // --- Render ---
+    const isQuizFinished = quizState.isQuizFinished;
 
   return (
     <div className="max-w-2xl w-full mx-auto px-6 py-10 bg-gradient-to-br from-purple-700 to-indigo-800 rounded-3xl shadow-2xl text-white text-center space-y-8 mt-10">
-      {!quizState.isQuizFinished && (
-        <>
-          <QuestionCard
-            currentQuestion={question}
-            currentSelectedAnswer={quizState?.currentSelectedAnswer?.answer}
-            handleNextQuestion={handleNextQuestion}
-            handleSelectAnswer={handleSelectAnswer}
-          />
-        </>
-      )}
-
-      {
-        // nếu kết thúc câu hỏi thì mở ra ResultScreen
-        quizState.isQuizFinished && (
-          <ResultScreen
-            userAnswers={quizState.submittedAnswers}
-            questions={QUESTIONS}
-            onRestart={() => handleReset()}
-          />
-        )
-      }
+      {isQuizFinished ? (
+          <>
+            <ResultScreen
+              userAnswers={quizState.submittedAnswers}
+              questions={QUESTIONS}
+              onRestart={handleReset}
+            />
+          </>
+        ) : (
+          <>
+            <QuestionCard
+              currentQuestion={question}
+              currentSelectedAnswer={quizState?.currentSelectedAnswer?.answer}
+              handleNextQuestion={handleNextQuestion}
+              handleSelectAnswer={handleSelectAnswer}
+            />
+          </>
+        )}
     </div>
   );
 }

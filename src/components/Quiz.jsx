@@ -2,6 +2,7 @@ import { useEffect, useState, useReducer } from "react";
 import Question from "./Question";
 import Answer from "./Answer";
 import SkipButton from "./SkipButton";
+import QuestionCard from "./QuestionCard";
 import { quizReducer } from "../hooks/useQuizReducer";
 import { initialState } from "../data";
 import {
@@ -49,16 +50,12 @@ export default function Quiz({ questions }) {
     <div className="max-w-2xl w-full mx-auto px-6 py-10 bg-gradient-to-br from-purple-700 to-indigo-800 rounded-3xl shadow-2xl text-white text-center space-y-8 mt-10">
       {!quizState.isQuizFinished && (
         <>
-          <Question questionText={questionText} />
-          {answers.map((answer) => (
-            <Answer
-              key={answer}
-              answer={answer}
-              isSelected={quizState?.currentSelectedAnswer?.answer === answer}
-              onSelectedAnswer={() => handleSelectAnswer(id, answer)}
-            />
-          ))}
-          <SkipButton text="Skip question" onNext={handleNextQuestion} />
+          <QuestionCard
+            currentQuestion={question}
+            currentSelectedAnswer={quizState?.currentSelectedAnswer?.answer}
+            handleNextQuestion={handleNextQuestion}
+            handleSelectAnswer={handleSelectAnswer}
+          />
         </>
       )}
 

@@ -1,5 +1,6 @@
 import { QUESTIONS } from "../data";
 import RestartButton from "./RestartButton";
+import ResultQuestion from "./ResultQuestion";
 import ResultQuestionCard from "./ResultQuestionCard";
 
 export default function ResultScreen({ questions, userAnswers, onRestart }) {
@@ -18,25 +19,22 @@ export default function ResultScreen({ questions, userAnswers, onRestart }) {
       <h2 className="text-4xl font-bold text-center text-purple-300">🎉 Quiz Completed!</h2>
 
       {/* Tổng kết kết quả */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-lg text-center">
-        <div className="bg-purple-900 rounded-lg p-4 shadow">
-          <p className="font-bold text-yellow-400">{Math.round((skipped / total) * 100)}%</p>
-          <p>Skipped</p>
-        </div>
-        <div className="bg-purple-900 rounded-lg p-4 shadow">
-          <p className="font-bold text-green-400">{Math.round((correct / total) * 100)}%</p>
-          <p>Correct</p>
-        </div>
-        <div className="bg-purple-900 rounded-lg p-4 shadow">
-          <p className="font-bold text-red-400">{Math.round((incorrect / total) * 100)}%</p>
-          <p>Incorrect</p>
-        </div>
-      </div>
+      <ResultQuestion
+        correct={correct}
+        incorrect={incorrect}
+        skipped={skipped}
+        total={total}
+      />
 
+    
+      {/* horizontal */}
       <hr className="border-gray-600 my-6" />
       
       {/* Chi tiết từng câu hỏi */}
-      <ResultQuestionCard questions={questions} userAnswers={userAnswers} />
+      <ResultQuestionCard
+        questions={questions}
+        userAnswers={userAnswers}
+      />
 
       <RestartButton onRestart={onRestart}/>
 

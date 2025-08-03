@@ -33,10 +33,10 @@ export default function Quiz({ questions }) {
   };
 
   const handleNextQuestion = () => {
-    if (!quizState.currentSelectedAnswer) {
-      alert("Please select an answer first.");
-      return;
-    }
+    // if (!quizState.currentSelectedAnswer) {
+    //   alert("Please select an answer first.");
+    //   return;
+    // }
     quizDispatch({ type: NEXT_QUESTION });
   };
 
@@ -63,6 +63,7 @@ export default function Quiz({ questions }) {
             <QuizHeader
               totalQuestions={questions.length}
               currentQuestionIndex={quizState.currentQuestionIndex + 1}
+              onTimeout={handleNextQuestion}
             />
 
             <QuestionCard

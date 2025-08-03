@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 export default function QuizHeader({currentQuestionIndex, totalQuestions, onTimeout}){
 
     const timerRef = useRef();
-    const [timeLeft, setTimeLeft ] = useState(30);
+    const [timeLeft, setTimeLeft ] = useState(1);
 
     useEffect(() => {
     // Code cần chạy khi component mount hoặc update

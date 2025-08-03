@@ -22,7 +22,7 @@ export function quizReducer(state, action) {
                 questionId: currentQuestion.id,
                 selectedAnswer: state.currentSelectedAnswer,
                 correctAnswer: currentQuestion.correct,
-                isCorrect: state.currentSelectedAnswer.answer === currentQuestion.correct
+                isCorrect: state.currentSelectedAnswer?.answer === currentQuestion.correct
             };
 
             return {

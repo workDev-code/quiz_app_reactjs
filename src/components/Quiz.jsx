@@ -53,7 +53,7 @@ export default function Quiz({ questions }) {
       {isQuizFinished ? (
           <>
             <ResultScreen
-              userAnswers={quizState.submittedAnswers}
+              submittedAnswers={quizState.submittedAnswers}
               questions={QUESTIONS}
               onRestart={handleReset}
             />

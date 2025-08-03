@@ -15,6 +15,9 @@ export default function ResultQuestion({skipped, correct, incorrect, total}){
                     <p>Incorrect</p>
                 </div>
             </div>
+            
+            {/* horizontal */}
+            <hr className="border-gray-600 my-6" />
         </>
     );
 }

@@ -1,10 +1,8 @@
 import { useEffect, useState, useReducer } from "react";
-import Question from "./Question";
-import Answer from "./Answer";
-import SkipButton from "./SkipButton";
 import QuestionCard from "./QuestionCard";
 import { quizReducer } from "../hooks/useQuizReducer";
 import { initialState } from "../data";
+import QuizHeader from "./QuizHeader";
 import {
   SELECT_ANSWER,
   NEXT_QUESTION,
@@ -23,7 +21,7 @@ export default function Quiz({ questions }) {
   // câu hỏi hiện tại
   const question = questions[quizState.currentQuestionIndex];
 
-   // --- Handler ---
+  // --- Handler ---
   const handleSelectAnswer = (id, answer) => {
     quizDispatch({
       type: SELECT_ANSWER,
@@ -46,11 +44,12 @@ export default function Quiz({ questions }) {
     quizDispatch({ type: RESET_QUIZ });
   };
 
-    // --- Render ---
-    const isQuizFinished = quizState.isQuizFinished;
+  // --- Render ---
+  const isQuizFinished = quizState.isQuizFinished;
 
   return (
     <div className="max-w-2xl w-full mx-auto px-6 py-10 bg-gradient-to-br from-purple-700 to-indigo-800 rounded-3xl shadow-2xl text-white text-center space-y-8 mt-10">
+
       {isQuizFinished ? (
           <>
             <ResultScreen
@@ -61,6 +60,11 @@ export default function Quiz({ questions }) {
           </>
         ) : (
           <>
+            <QuizHeader
+              totalQuestions={questions.length}
+              currentQuestionIndex={quizState.currentQuestionIndex + 1}
+            />
+
             <QuestionCard
               currentQuestion={question}
               currentSelectedAnswer={quizState?.currentSelectedAnswer?.answer}

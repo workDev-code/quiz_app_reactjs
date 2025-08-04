@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import questionsData from './data/questions.json';
 import Header from "./components/Header";
 import StartButton from "./components/StartButton";
+import Loading from "./components/Loading";
 import Quiz from "./components/Quiz";
 
 function App() {
@@ -21,7 +22,9 @@ function App() {
     console.log(questions);
 
     if (questions.length === 0) {
-        return <div className="text-white">Loading questions...</div>;
+        return (
+           <Loading />
+        );
     }
     
     return (

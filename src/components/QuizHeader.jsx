@@ -10,7 +10,7 @@ export default function QuizHeader({currentQuestionIndex, totalQuestions, onTime
     const [timeLeft, setTimeLeft ] = useState(TIME);
 
     useEffect(() => {
-        setTimeLeft(TIME);
+        setTimeLeft(TIME); // Reset thời gian về ban đầu (mỗi lần chuyển câu)
 
         timerRef.current = setTimeout(() => {
             onTimeout?.(); // GỌI SAU KHI render xong
@@ -23,7 +23,7 @@ export default function QuizHeader({currentQuestionIndex, totalQuestions, onTime
                 //Đồng hồ tự chạy và trừ timeLeft mỗi giây
                 setTimeLeft((prev) => {
                     if(prev <= 0) {
-                        clearInterval(timerRef.current); // dừng khi còn 0
+                        clearInterval(intervalRef.current); // dừng khi còn 0
                         return 0;
                     }
                     return prev - 1;

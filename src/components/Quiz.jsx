@@ -33,10 +33,6 @@ export default function Quiz({ questions }) {
   };
 
   const handleNextQuestion = () => {
-    // if (!quizState.currentSelectedAnswer) {
-    //   alert("Please select an answer first.");
-    //   return;
-    // }
     quizDispatch({ type: NEXT_QUESTION });
   };
 

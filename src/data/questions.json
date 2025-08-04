@@ -1,0 +1,20 @@
+[
+  {
+    "id": "q1",
+    "question": "What is the capital of France?",
+    "answers": ["Paris", "Berlin", "Rome", "Madrid"],
+    "correctAnswer": "Paris"
+  },
+  {
+    "id": "q2",
+    "question": "Which language is used for styling web pages?",
+    "answers": ["HTML", "CSS", "JavaScript", "Python"],
+    "correctAnswer": "CSS"
+  },
+  {
+    "id": "q3",
+    "question": "Which is not a JavaScript Framework?",
+    "answers": ["React", "Angular", "Vue", "Django"],
+    "correctAnswer": "Django"
+  }
+]
